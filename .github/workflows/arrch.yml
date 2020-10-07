@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Build the Docker image
-      run: docker build arrch/ --squash --tag $IMAGE_NAME
+      run: docker build arrch/ --tag $IMAGE_NAME
       
     - name: Log into GH CR
       run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
