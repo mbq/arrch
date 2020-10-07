@@ -1,9 +1,11 @@
 name: Arrch main image
 
 on:
-  workflow_run: 
+  push:
+    branches: 
+      - master
   schedule:
-    - cron: 7 17 * * thu
+    - cron: '7 17 * * thu'
   
 
       
