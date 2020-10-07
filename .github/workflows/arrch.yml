@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  schedule:
+    - cron: 7 17 * * thu
+      
+env:
+  IMAGE_NAME: arrch
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build arrch/ --squash --tag $IMAGE_NAME
+      
+    - name: Log into GH CR
+      run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+    
+    - name: Push image
+      run: |
+        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+        VERSION=$(date +%s)
+        
+        docker push $IMAGE_NAME $IMAGE_NAME:$VERSION
+        docker push $IMAGE_NAME $IMAGE_NAME:latest
+        
+  
