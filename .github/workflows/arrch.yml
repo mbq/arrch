@@ -1,8 +1,11 @@
-name: Docker Image CI
+name: Arrch main image
 
 on:
+  workflow_run: 
   schedule:
     - cron: 7 17 * * thu
+  
+
       
 env:
   IMAGE_NAME: arrch
